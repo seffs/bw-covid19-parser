@@ -33,5 +33,5 @@ parsed_json = {
     geboostert.group(1): '\n'.join(geboostert.group(2,3))
 }
 
-with open(JSON_FULLNAME, 'w', encoding='utf8') as fp:
+with open(JSON_FULLNAME, 'w', encoding='utf-8') as fp:
     json.dump(parsed_json, fp)
