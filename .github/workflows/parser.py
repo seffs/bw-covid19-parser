@@ -28,9 +28,9 @@ parsed_json = {
     faelle.group(1) : faelle.group(2),
     verstoberne.group(1): verstoberne.group(2),
     genesene.group(1): genesene.group(2),
-    min_einmal_geimpft.group(1) : '\n'.join(min_einmal_geimpft.group(2,3)),
-    grundimmunisiert.group(1) : '\n'.join(grundimmunisiert.group(2,3)),
-    geboostert.group(1): '\n'.join(geboostert.group(2,3))
+    min_einmal_geimpft.group(1) : '\\n'.join(min_einmal_geimpft.group(2,3)),
+    grundimmunisiert.group(1) : '\\n'.join(grundimmunisiert.group(2,3)),
+    geboostert.group(1): '\\n'.join(geboostert.group(2,3))
 }
 
 with open(JSON_FULLNAME, 'w') as fp:
