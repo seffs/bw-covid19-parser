@@ -20,9 +20,9 @@ parsed_pdf = high_level.extract_text(PDF_FULLNAME, maxpages=1)
 faelle = re.search("(Bestätigte Fälle).*\s\n(.*)", parsed_pdf)
 verstoberne = re.search("(Verstorbene).*\s\n(.*)", parsed_pdf)
 genesene = re.search("(Genesene).*\s\n(.*)", parsed_pdf)
-min_einmal_geimpft = re.search("(Mindestens einmal Geimpfte).*\s\n(.*)\s\n(.*)", parsed_pdf)
-grundimmunisiert = re.search("(Grundimmunisiert).*\s\n(.*)\s\n(.*)", parsed_pdf)
-geboostert = re.search("(Auffrischimpfungen).*\s\n(.*)\s\n(.*)", parsed_pdf)
+min_einmal_geimpft = re.search("(Mindestens einmal Geimpfte).*\s\n(.*)\s\n(.*\))", parsed_pdf)
+grundimmunisiert = re.search("(Grundimmunisiert).*\s\n(.*)\s\n(.*\))", parsed_pdf)
+geboostert = re.search("(Auffrischimpfungen).*\s\n(.*)\s\n(.*\))", parsed_pdf)
 
 parsed_json = {
     faelle.group(1) : faelle.group(2),
