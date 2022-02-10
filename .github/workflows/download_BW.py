@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import requests, os, sys
-from datetime import datetime
+from datetime import datetime, delta
 
 VERBOSE  = True
 DATAPATH = os.path.dirname(os.path.abspath(__file__)) + os.sep + ".." + os.sep + ".." + os.sep + "data_BW" + os.sep
-DATE_STR = datetime.fromtimestamp(datetime.now().timestamp()).strftime('%Y-%m-%d')
-DATE_SHR = datetime.fromtimestamp(datetime.now().timestamp()).strftime('%y%m%d')
+DATE_STR = datetime.fromtimestamp((datetime.now() - timedelta(days=1)).timestamp()).strftime('%Y-%m-%d')
+DATE_SHR = datetime.fromtimestamp((datetime.now() - timedelta(days=1)).timestamp()).strftime('%y%m%d')
 FILENAME = "BW_{}.pdf".format(DATE_STR)
 FULLNAME = DATAPATH + FILENAME
 CSV_URL1 = "https://www.baden-wuerttemberg.de/fileadmin/redaktion/dateien/PDF/Coronainfos/Corona_2022/{}_LGA_COVID19-Tagesbericht.pdf".format(DATE_SHR)

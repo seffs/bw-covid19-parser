@@ -4,12 +4,12 @@
 import os
 import json
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import pdfplumber
 
 DATE_STR = datetime.fromtimestamp(datetime.now().timestamp()).strftime('')
 DATAPATH = os.path.dirname(os.path.abspath(__file__)) + os.sep + ".." + os.sep + ".." + os.sep + "data_BW" + os.sep
-DATE_STR = datetime.fromtimestamp(datetime.now().timestamp()).strftime('%Y-%m-%d')
+DATE_STR = datetime.fromtimestamp((datetime.now() - timedelta(days=1)).timestamp()).strftime('%Y-%m-%d')
 PDF_FILENAME = "BW_{}.pdf".format(DATE_STR)
 JSON_FILENAME = "BW_{}.json".format(DATE_STR)
 PDF_FULLNAME = DATAPATH + PDF_FILENAME
