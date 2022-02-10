@@ -46,9 +46,9 @@ for page in pdf.pages:
                 for i in range(len(row)):
                     if row[i] and (row[i].startswith('SK') or row[i].startswith('LK')):
                         bericht_pro_LSK[row[i]] = dict()
-                        bericht_pro_LSK[row[i]]['Bestätigte Fälle'] = row[i+1] + ' ' + row[i+2]
-                        bericht_pro_LSK[row[i]]['Verstorbene'] = row[i+4] + ' ' + row[i+5]
-                        bericht_pro_LSK[row[i]]['7-Tage-Inzidenz'] = row[i+4] + ' ' + row[i+5]
+                        bericht_pro_LSK[row[i]]['Bestätigte Fälle'] = row[i+1] + ' ' + row[i+2] if row[i+2] != '-' else ''
+                        bericht_pro_LSK[row[i]]['Verstorbene'] = row[i+4] + ' ' + row[i+5] if row[i+5] != '-' else ''
+                        bericht_pro_LSK[row[i]]['7-Tage-Inzidenz'] = row[i+7]
                         break
     else:
         break
