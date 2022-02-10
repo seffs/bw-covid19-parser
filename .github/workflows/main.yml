@@ -2,8 +2,6 @@ name: daily BW update
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 18 * * *"
 
 jobs:
   update_page:
