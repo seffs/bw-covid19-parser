@@ -3,6 +3,7 @@
 
 import os
 import json
+import re
 
 from datetime import datetime, timedelta
 import pdfplumber
@@ -45,10 +46,25 @@ for page in pdf.pages:
         for table in page.extract_tables(pdfplumber_settings):
             for row in table:
                 for i in range(len(row)):
-                    if row[i] and (row[i].startswith('SK') or row[i].startswith('LK')):
+                    if row[i] and ('SK' in row[i] or 'LK' in row[i]):
+                        #There are, of course, better ways to solve this
                         bericht_pro_LSK[row[i]] = dict()
-                        bericht_pro_LSK[row[i]]['Bestätigte Fälle'] = row[i+1] + (' ' + row[i+2] if row[i+2] != '-' else '')
-                        bericht_pro_LSK[row[i]]['Verstorbene'] = row[i+4] + (' ' + row[i+5]+')' if row[i+5] != '-' else '')
+                        confirmed_delta_index = i + 1
+                        while(row[confirmed_delta_index] != '-' and not re.findall(r'\(\+(\s)*([0-9]+)\)', row[confirmed_delta_index])):
+                            confirmed_delta_index += 1
+                        confirmed_index = confirmed_delta_index - 1
+                        while(confirmed_index > i and not re.findall(r'^\s*([0-9]+[\.,]?)+[0-9]\s*$', row[confirmed_index])):
+                            confirmed_index -= 1
+                        bericht_pro_LSK[row[i]]['Bestätigte Fälle'] = row[confirmed_index] + (
+                            ' ' + row[confirmed_delta_index] if row[confirmed_delta_index] != '-' else '')
+                        death_delta_index = confirmed_delta_index + 1
+                        while(row[death_delta_index] != '-' and not re.findall(r'\(\+(\s)*([0-9]+)\)', row[death_delta_index])):
+                            death_delta_index += 1
+                        death_index = death_delta_index - 1
+                        while(death_index > i and not re.findall(r'^\s*([0-9]+[\.,]?)+[0-9]\s*$', row[death_index])):
+                            death_index -= 1
+                        bericht_pro_LSK[row[i]]['Verstorbene'] = row[death_index] + (
+                            ' ' + row[death_delta_index] if row[death_delta_index] != '-' else '')
                         bericht_pro_LSK[row[i]]['7-Tage-Inzidenz'] = row[-1]
                         break
     else:
