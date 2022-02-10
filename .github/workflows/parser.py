@@ -23,11 +23,6 @@ bericht_keywords = ['Bestätigte Fälle', 'Verstorbene', 'Genesene',
 bericht_fuer_BW = dict()
 bericht_pro_LSK = dict()
 
-pdfplumber_settings = {
-    "vertical_strategy": "text",
-    "keep_blank_chars": True,
-}
-
 for page in pdf.pages:
     if page.page_number == 1:
         for table in page.extract_tables():
@@ -43,30 +38,19 @@ for page in pdf.pages:
                                     bericht_fuer_BW[keyword] = bericht_fuer_BW[keyword].replace('\n','\\n')
                                     break
     elif page.page_number == 2:
-        for table in page.extract_tables(pdfplumber_settings):
-            for row in table:
-                for i in range(len(row)):
-                    if row[i] and ('SK' in row[i] or 'LK' in row[i]):
-                        #There are, of course, better ways to solve this
-                        bericht_pro_LSK[row[i]] = dict()
-                        confirmed_delta_index = i + 1
-                        while(row[confirmed_delta_index] != '-' and not re.findall(r'\(\+(\s)*([0-9]+)\)', row[confirmed_delta_index])):
-                            confirmed_delta_index += 1
-                        confirmed_index = confirmed_delta_index - 1
-                        while(confirmed_index > i and not re.findall(r'^\s*([0-9]+[\.,]?)+[0-9]\s*$', row[confirmed_index])):
-                            confirmed_index -= 1
-                        bericht_pro_LSK[row[i]]['Bestätigte Fälle'] = row[confirmed_index].replace('\n','\\n') + (
-                            ' ' + row[confirmed_delta_index].replace('\n','\\n') if row[confirmed_delta_index] != '-' else '')
-                        death_delta_index = confirmed_delta_index + 1
-                        while(row[death_delta_index] != '-' and not re.findall(r'\(\+(\s)*([0-9]+)\)', row[death_delta_index])):
-                            death_delta_index += 1
-                        death_index = death_delta_index - 1
-                        while(death_index > i and not re.findall(r'^\s*([0-9]+[\.,]?)+[0-9]\s*$', row[death_index])):
-                            death_index -= 1
-                        bericht_pro_LSK[row[i]]['Verstorbene'] = row[death_index].replace('\n','\\n') + (
-                            ' ' + row[death_delta_index].replace('\n','\\n') if row[death_delta_index] != '-' else '')
-                        bericht_pro_LSK[row[i]]['7-Tage-Inzidenz'] = row[-1]
-                        break
+        page_text = page.extract_text()
+        for line in page_text.split('\n'):
+            if 'SK' in line or 'LK' in line:
+                lks_stats = line.split('  ')
+                lks_name = lks_stats[0]
+                lks_bestaetig = lks_stats[1] + (' ' + lks_stats[2] if lks_stats[2] != '-' else '')
+                lks_todesfaelle = lks_stats[4] + (' ' + lks_stats[5] if lks_stats[5] != '-' else '')
+                lks_inzidenz = lks_stats[7] 
+
+                bericht_pro_LSK[lks_name] = dict()
+                bericht_pro_LSK[lks_name]['Bestätigte Fälle'] = lks_bestaetig
+                bericht_pro_LSK[lks_name]['Verstorbene'] = lks_todesfaelle
+                bericht_pro_LSK[lks_name]['7-Tage-Inzidenz'] = lks_inzidenz
     else:
         break
 
