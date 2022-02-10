@@ -24,7 +24,8 @@ bericht_fuer_BW = dict()
 bericht_pro_LSK = dict()
 
 pdfplumber_settings = {
-    "vertical_strategy": "text", 
+    "vertical_strategy": "text",
+    "keep_blank_chars": True,
 }
 
 for page in pdf.pages:
@@ -46,9 +47,9 @@ for page in pdf.pages:
                 for i in range(len(row)):
                     if row[i] and (row[i].startswith('SK') or row[i].startswith('LK')):
                         bericht_pro_LSK[row[i]] = dict()
-                        bericht_pro_LSK[row[i]]['Bestätigte Fälle'] = row[i+1] + ' ' + (row[i+2]+')' if row[i+2] != '-' else '')
-                        bericht_pro_LSK[row[i]]['Verstorbene'] = row[i+5] + ' ' + (row[i+6]+')' if row[i+6] != '-' else '')
-                        bericht_pro_LSK[row[i]]['7-Tage-Inzidenz'] = row[i+8]
+                        bericht_pro_LSK[row[i]]['Bestätigte Fälle'] = row[i+1] + (' ' + row[i+2] if row[i+2] != '-' else '')
+                        bericht_pro_LSK[row[i]]['Verstorbene'] = row[i+4] + (' ' + row[i+5]+')' if row[i+5] != '-' else '')
+                        bericht_pro_LSK[row[i]]['7-Tage-Inzidenz'] = row[-1]
                         break
     else:
         break
