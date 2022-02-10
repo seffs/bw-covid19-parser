@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import requests, os, sys
-from datetime import datetime, delta
+from datetime import datetime, time
 
 VERBOSE  = True
 DATAPATH = os.path.dirname(os.path.abspath(__file__)) + os.sep + ".." + os.sep + ".." + os.sep + "data_BW" + os.sep
