@@ -41,6 +41,7 @@ for page in pdf.pages:
                             for cell in row:
                                 if cell and keyword in cell:
                                     bericht_fuer_BW[keyword] = cell.split('\n',1)[1]
+                                    bericht_fuer_BW[keyword] = bericht_fuer_BW[keyword].replace('\n','\\n')
                                     break
     elif page.page_number == 2:
         for table in page.extract_tables(pdfplumber_settings):
@@ -55,16 +56,16 @@ for page in pdf.pages:
                         confirmed_index = confirmed_delta_index - 1
                         while(confirmed_index > i and not re.findall(r'^\s*([0-9]+[\.,]?)+[0-9]\s*$', row[confirmed_index])):
                             confirmed_index -= 1
-                        bericht_pro_LSK[row[i]]['Bestätigte Fälle'] = row[confirmed_index] + (
-                            ' ' + row[confirmed_delta_index] if row[confirmed_delta_index] != '-' else '')
+                        bericht_pro_LSK[row[i]]['Bestätigte Fälle'] = row[confirmed_index].replace('\n','\\n') + (
+                            ' ' + row[confirmed_delta_index].replace('\n','\\n') if row[confirmed_delta_index] != '-' else '')
                         death_delta_index = confirmed_delta_index + 1
                         while(row[death_delta_index] != '-' and not re.findall(r'\(\+(\s)*([0-9]+)\)', row[death_delta_index])):
                             death_delta_index += 1
                         death_index = death_delta_index - 1
                         while(death_index > i and not re.findall(r'^\s*([0-9]+[\.,]?)+[0-9]\s*$', row[death_index])):
                             death_index -= 1
-                        bericht_pro_LSK[row[i]]['Verstorbene'] = row[death_index] + (
-                            ' ' + row[death_delta_index] if row[death_delta_index] != '-' else '')
+                        bericht_pro_LSK[row[i]]['Verstorbene'] = row[death_index].replace('\n','\\n') + (
+                            ' ' + row[death_delta_index].replace('\n','\\n') if row[death_delta_index] != '-' else '')
                         bericht_pro_LSK[row[i]]['7-Tage-Inzidenz'] = row[-1]
                         break
     else:
