@@ -11,9 +11,9 @@ DATE_SHR = datetime.fromtimestamp(datetime.now().timestamp()).strftime('%y%m%d')
 FILENAME = "BW_{}.pdf".format(DATE_STR)
 FULLNAME = DATAPATH + FILENAME
 CSV_URL1 = "https://www.baden-wuerttemberg.de/fileadmin/redaktion/dateien/PDF/Coronainfos/Corona_2022/{}_LGA_COVID19-Tagesbericht.pdf".format(DATE_SHR)
-CSV_URL2 = "https://www.baden-wuerttemberg.de/fileadmin/redaktion/dateien/PDF/Coronainfos/Corona_2022/{}_LGA_COVID19-Lagesbericht.pdf".format(DATE_SHR)
+CSV_URL2 = "https://www.baden-wuerttemberg.de/fileadmin/redaktion/dateien/PDF/Coronainfos/Corona_2022/{}_LGA_COVID19-Lagebericht.pdf".format(DATE_SHR)
 CSV_URL3 = "https://www.gesundheitsamt-bw.de/fileadmin/LGA/_DocumentLibraries/SiteCollectionDocuments/05_Service/LageberichtCOVID19/{}_LGA_COVID19-Tagesbericht.pdf".format(DATE_STR)
-CSV_URL4 = "https://www.gesundheitsamt-bw.de/fileadmin/LGA/_DocumentLibraries/SiteCollectionDocuments/05_Service/LageberichtCOVID19/{}_LGA_COVID19-Lagesbericht.pdf".format(DATE_STR)
+CSV_URL4 = "https://www.gesundheitsamt-bw.de/fileadmin/LGA/_DocumentLibraries/SiteCollectionDocuments/05_Service/LageberichtCOVID19/{}_LGA_COVID19-Lagebericht.pdf".format(DATE_STR)
 
 CSV_URLS = [CSV_URL1, CSV_URL2, CSV_URL3, CSV_URL4]
 
