@@ -23,6 +23,10 @@ bericht_keywords = ['Bestätigte Fälle', 'Verstorbene', 'Genesene',
 bericht_fuer_BW = dict()
 bericht_pro_LSK = dict()
 
+pdfplumber_settings = {
+    "vertical_strategy": "text", 
+}
+
 for page in pdf.pages:
     if page.page_number == 1:
         for table in page.extract_tables():
@@ -37,7 +41,7 @@ for page in pdf.pages:
                                     bericht_fuer_BW[keyword] = cell.split('\n',1)[1]
                                     break
     elif page.page_number == 2:
-        for table in page.extract_tables():
+        for table in page.extract_tables(pdfplumber_settings):
             for row in table:
                 for i in range(len(row)):
                     if row[i] and (row[i].startswith('SK') or row[i].startswith('LK')):
