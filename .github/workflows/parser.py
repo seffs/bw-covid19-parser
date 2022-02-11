@@ -42,7 +42,7 @@ for page in pdf.pages:
         for line in page_text.split('\n'):
             if 'SK' in line or 'LK' in line:
                 lks_stats = line.split('  ')
-                lks_name = lks_stats[0].split('#')[0][:-1]
+                lks_name = lks_stats[0].split('#')[0].split(' ')[0]
                 lks_bestaetig = lks_stats[1] + (' ' + lks_stats[2] if lks_stats[2] != '-' else '')
                 lks_todesfaelle = lks_stats[4] + (' ' + lks_stats[5] if lks_stats[5] != '-' else '')
                 lks_inzidenz = lks_stats[7] 
