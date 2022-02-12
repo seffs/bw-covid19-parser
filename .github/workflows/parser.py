@@ -34,7 +34,7 @@ for page in pdf.pages:
                         if not bericht_fuer_BW.get(keyword):
                             for cell in row:
                                 if cell and keyword in cell:
-                                    bericht_fuer_BW[keyword] = cell.split('\n',1)[1]
+                                    bericht_fuer_BW[keyword] = cell.split('\n',1)[1] if '\n' in cell else cell
                                     bericht_fuer_BW[keyword] = bericht_fuer_BW[keyword].replace('\n','\\n')
                                     break
     elif page.page_number == 2:
