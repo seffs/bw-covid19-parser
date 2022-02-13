@@ -23,8 +23,9 @@ bericht_keywords = ['Bestätigte Fälle', 'Verstorbene', 'Genesene',
 bericht_fuer_BW = dict()
 bericht_pro_LSK = dict()
 
+# Inzidenzbericht on the weekends!
 for page in pdf.pages:
-    if page.page_number == 1:
+    if page.page_number == 1 and datetime.today().weekday() <= 4:
         for table in page.extract_tables():
             if len(bericht_fuer_BW) == len(bericht_keywords):
                 break
@@ -34,10 +35,10 @@ for page in pdf.pages:
                         if not bericht_fuer_BW.get(keyword):
                             for cell in row:
                                 if cell and keyword in cell:
-                                    bericht_fuer_BW[keyword] = cell.split('\n',1)[1] if '\n' in cell else cell
+                                    bericht_fuer_BW[keyword] = cell.split('\n',1)[1]
                                     bericht_fuer_BW[keyword] = bericht_fuer_BW[keyword].replace('\n','\\n')
                                     break
-    elif page.page_number == 2:
+    elif page.page_number == 2 or (page.page_number == 1 and datetime.today().weekday() > 4):
         page_text = page.extract_text()
         for line in page_text.split('\n'):
             if 'SK' in line or 'LK' in line:
