@@ -3,13 +3,12 @@
 
 import os
 import json
-import re
 
-from datetime import datetime, timedelta
+from datetime import datetime
 import pdfplumber
 
 DATAPATH = os.path.dirname(os.path.abspath(__file__)) + os.sep + ".." + os.sep + ".." + os.sep + "data_BW" + os.sep
-DATE_STR = datetime.fromtimestamp((datetime.now() - timedelta(days=1)).timestamp()).strftime('%Y-%m-%d')
+DATE_STR = datetime.fromtimestamp(datetime.now().timestamp()).strftime('%Y-%m-%d')
 PDF_FILENAME = "BW_{}.pdf".format(DATE_STR)
 JSON_FILENAME = "BW_{}.json".format(DATE_STR)
 PDF_FULLNAME = DATAPATH + PDF_FILENAME
@@ -47,7 +46,7 @@ for page in pdf.pages:
                 lks_name = lks_stats[0].split('#')[0].rstrip()
                 lks_bestaetig = lks_stats[1] + (' ' + lks_stats[2] if lks_stats[2] != '-' else '')
                 lks_todesfaelle = lks_stats[4] + (' ' + lks_stats[5] if lks_stats[5] != '-' else '')
-                lks_inzidenz = lks_stats[7] 
+                lks_inzidenz = lks_stats[-1]
 
                 bericht_pro_LSK[lks_name] = dict()
                 bericht_pro_LSK[lks_name]['Bestätigte Fälle'] = lks_bestaetig
